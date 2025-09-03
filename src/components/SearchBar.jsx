@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
-function searchBar({ onSearch }) {
+function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
@@ -37,7 +37,7 @@ function searchBar({ onSearch }) {
   );
 }
 
-export default searchBar;
+export default SearchBar;
 
 
 
