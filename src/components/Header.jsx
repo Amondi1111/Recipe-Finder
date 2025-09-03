@@ -1,4 +1,5 @@
 import SearchBar from './SearchBar';
+import { Link } from 'react-router-dom'
 
 function Header ({ onSearch }){
     return(
@@ -9,11 +10,15 @@ function Header ({ onSearch }){
 
     {/* Button */}
     <div className="flex space-x-4 ml-auto">
-        <button className="shadow hover:bg-[#9B3131] transition rounded-lg px-4 py-2">login
-   </button>
-   <button className="shadow hover:bg-[#9B3131] transition rounded-lg px-4 py-2">Sign Up
+        <Link
+        to="/Login" 
+        className="shadow hover:bg-[#9B3131] transition rounded-lg px-4 py-2">login
+   </Link>
+   <Link
+   to="/Signup"
+   className="shadow hover:bg-[#9B3131] transition rounded-lg px-4 py-2">Sign Up
    
-   </button>
+   </Link>
 
     </div>
 </div>
