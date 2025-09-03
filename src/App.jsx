@@ -36,7 +36,7 @@ function App() {
       setLoading(true)
       try{
         const response = await axios.get(
-          `https://www.themealdb.com/api/json/v1/1/search.php?s=${ingredient}`
+          `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
         )
         setRecipes(response.data.meals || [])
       } catch (error) {
