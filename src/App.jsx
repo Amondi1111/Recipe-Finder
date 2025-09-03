@@ -6,7 +6,7 @@ import SearchBar from './components/SearchBar'
 import IngredientInput from './components/IngredientInput'
 import RecipeList from './components/RecipeList'
 import Login from './components/Login'
-import Sihnup from './components/Signup'
+import Signup from './components/Signup'
 import './App.css'
 
 function App() {
