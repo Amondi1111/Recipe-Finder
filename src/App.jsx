@@ -7,11 +7,12 @@ import IngredientInput from './components/IngredientInput'
 import RecipeList from './components/RecipeList'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import RecipeDeatails from './components/RecipeDetails'
 import './App.css'
 
 function App() {
   const [recipes, setRecipes] = useState([])
-  const [Loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
 
 {/*searching using the recipe name */}
@@ -27,13 +28,13 @@ function App() {
       console.error("Error fetching recipes at the moment:", error)
       setRecipes([])
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
      {/*search using ingredients */}
     const handleIngredientSubmit = async(ingredient) =>{
-      setLoading(true)
+      setIsLoading(true)
       try{
         const response = await axios.get(
           `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
@@ -43,7 +44,7 @@ function App() {
         console.error("Error fetching recipes at the moment:", error)
         setRecipes([])
       } finally {
-           setLoading(false)
+           setIsLoading(false)
       }
     }
 
@@ -58,7 +59,7 @@ function App() {
            element={
             <>
               <IngredientInput onSubmit={handleIngredientSubmit} /> 
-          <RecipeList recipes={recipes} Loading={Loading} />
+          <RecipeList recipes={recipes} isLoading={isLoading} />
     
             </>
            }
@@ -66,6 +67,7 @@ function App() {
 
            <Route path="/Login" element={<Login />} />
            <Route path="/Signup" element={<Signup />} />
+           <Route path="/recipe/:idMeal" element={<RecipeDetails />} />
        </Routes>
       </Router>
     

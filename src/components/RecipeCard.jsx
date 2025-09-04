@@ -1,3 +1,5 @@
+import { Link, link } from 'react-router-dom'
+
 function RecipeCard({ recipe }) {
     if (!recipe) return null;
 
@@ -21,13 +23,16 @@ function RecipeCard({ recipe }) {
                 <p className="text-sm text-gray-600 my-2 line-clamp-2">
                     {recipe.strInstructions
                     ? recipe.strInstructions.substring(0, 120) + "..."
-                    : "No description is available now."}
+                    : "Tap to view details."}
                 </p>
 
                 {/*For button */}
-                <button className="mt-4 w-full bg-[#FF6347] text-whiten py-2 rounded-md hover:bg-[#9B3131] transition">
+                <Link
+                to={`/recipe/${recipe.idMeal}`}
+                state={{ meal: recipe }}
+                 className="mt-4 w-full bg-[#FF6347] text-whiten py-2 rounded-md hover:bg-[#9B3131] transition">
                    View Recipe 
-                </button>
+                </Link>
             </div>
 
         </div>

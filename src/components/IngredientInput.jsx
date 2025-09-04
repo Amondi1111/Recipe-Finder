@@ -2,55 +2,57 @@ import { useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 
-function IngredientInput({ onSubmit }) {
-    const [input, setInput] = useState("");
+function IngredientInput({ onSubmit, ingredients = [] }) {
+    const [ingredient, setIngredient] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (input.trim()) {
-             onSubmit(input);
-             setInput("");
+        if (ingredient.trim()) {
+             onSubmit(ingredient.trim());
+          
         }
     };
 
-    return(
+    return (
 
-          <div className="bg-[#9B3131] min-h-[300px] min-w-[250px] flex flex-col items-center justify-center text-center p-6">
-        <h1 className="text-2xl font-bold mb-8 text-black">
-          Tell us about the ingredients in your kitchen
-        </h1>
-
-        {/* Input Button */}
+        <div className="bg-[#9B3131] min-h-[300px] min-w-[250px] flex flex-col items-center justify-center text-center p-6"> <h1 className="text-2xl font-bold mb-8 text-black"> Tell us about the ingredients in your kitchen </h1>
         <div className="flex item-center gap-2">
-           <span className="text-black mt-2">
+          {/* Icon Button */}
+           <span className="text-black mt-7">
                 <FaPlay />
             </span>
 
-        <form
-        
-          onSubmit={handleSubmit}
-          className="flex items-center gap-2 bg-white rounded-md px-3 py-2 shadow-md w-full max-w-md"
-          >
-           
-
-            {/* Input */}
+        <form onSubmit={handleSubmit} className="flex gap-2 p-4">
+           {/* Input */}
             <input
                  type="text"
-                 value={input}
-                 onChange={(e) => setInput(e.target.value)}
-                 placeholder="Ingredients"
-                 className="flex-grow border-none outline-none px-2"
+                 list="ingredient-options"
+                 value={ingredient}
+                 onChange={(e) => setIngredient(e.target.value)}
+                 placeholder="Search by ingredient...."
+                 className="flex-1 border border-gray-300  bg-[#FF6347] rounded-md p-2 "
+              
                  />
-
                  <button type="submit"
-                   className="text-black hover:text-[#FF6347] transition-colors">
-                    <FiSearch />
-
+                   className="text-black hover:text-[#9B3131] transition-colors">
+                  
+                  <FiSearch  size={18}/>
+               
                    </button>
-                   </form>
 
-             </div>      
-        </div>
+
+                  {/* For auto completion of ingredient list */}
+                 <datalist id="ingredient-options">
+                  {ingredients.map((item) => (
+                    <option key={item.idIngredient} 
+                    value={item.strIngredient} />
+                  ))} 
+                 </datalist>
+
+                 
+                   </form>
+                   </div>
+                   </div>
     );
 }
 
