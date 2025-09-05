@@ -1,4 +1,4 @@
-import { Link, link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function RecipeCard({ recipe }) {
     if (!recipe) return null;
@@ -29,8 +29,8 @@ function RecipeCard({ recipe }) {
                 {/*For button */}
                 <Link
                 to={`/recipe/${recipe.idMeal}`}
-                state={{ meal: recipe }}
-                 className="mt-4 w-full bg-[#FF6347] text-whiten py-2 rounded-md hover:bg-[#9B3131] transition">
+            
+                 className="mt-4 block w-full text-center bg-[#FF6347] text-white py-2 rounded-md hover:bg-[#9B3131] transition">
                    View Recipe 
                 </Link>
             </div>

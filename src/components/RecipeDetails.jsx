@@ -1,37 +1,56 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect,  useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-export default function RecipeDetails() {
+export default function RecipeDetails({ resetRecipes}) {
     const { idMeal } = useParams();
     const navigate = useNavigate();
     const [meal, setMeal] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const handleBack = () => {
+        resetRecipes();
+        navigate("/");
+    }
+
     useEffect(() => {
-        let ignoe = false;
+        let ignore = false;
+
         async function load() {
             setIsLoading(true);
             setError(null);
+            
             try {
                 const res = await fetch(
-                    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=&{idMeal}`
+                    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
                 );
                 const data = await res.json();
                 const found = data?.meals?.[0] || null;
+
                 if (!ignore) setMeal(found);
-
-
-            }catch (e) {
+                   } catch (e) {
                 if (!ignore) setError('Failed to load recipe details!');
 
-            }finally {
+            } finally {
                 if (!ignore) setIsLoading(false);
             }
         }
+
         load();
-        return () => {ignore = true; };
+        return () => {
+             ignore = true;
+             };
     }, [idMeal]);
+
+    const ingredients =
+    meal &&
+    Array.from({ length: 20 },  (_, i) => {
+        const ingredient = meal[`strIngredient${i + 1}`];
+        const measure = meal[`strMeasure${i + 1}`];
+        return ingredient ? `${ingredient} - ${measure}` : null;
+
+    }).filter(Boolean);
+
   if (isLoading) {
     return (
         <div className="min-h-[60vh] flex items-center justify-center">
@@ -45,7 +64,7 @@ export default function RecipeDetails() {
         <div className="text-center">
             <p className="text-[#9B3131] mb-4">{error || 'Recipe not found.'}</p>
             <button
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className="px-4 py-2 rounded bg-[#FF6347] text-white">
                 Go Back
             </button>
@@ -57,20 +76,21 @@ export default function RecipeDetails() {
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-8">
         <button
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className="px-4 py-2 rounded bg-[#FF6347] text-white">
-                Back
+                Back to HomePage
             </button>
 
-            <div className="grid grid-cols-1 md:grig-cols-2 gap-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
 
                 {/*Image and description */}
                 <div>
                     {meal.strMealThumb && (
+
                     <img
                     src={meal.strMealThumb}
                     alt={meal.strMeal}
-                    classname="w-full rounded-xl shadow"
+                    className="w-full rounded-xl shadow"
                     />
                     )}
                     <div className="mt-4 text-sm text-gray-600 space-y-1 ">
@@ -81,7 +101,7 @@ export default function RecipeDetails() {
                            <a
                            href={meal.strSource}
                            target="_blank"
-                           rel="nonreferrer"
+                           rel="noreferrer"
                            className="underline"
                            >
                             Source
@@ -108,10 +128,10 @@ export default function RecipeDetails() {
 
                     {meal.strYoutube &&(
                         <a
-                        className="inline-block mt-6 px-4 py-2 rounded bg-[#FF6347] text-white hover:bg[#9B3131] transition "
+                        className="inline-block mt-6 px-4 py-2 rounded bg-[#FF6347] text-white hover:bg-[#9B3131] transition "
                         href={meal.strYoutube}
                         target="_blank"
-                        ref="nonreferrer"
+                        rel="noreferrer"
                         >
                             Watch on Youtube
                         </a>
@@ -122,3 +142,4 @@ export default function RecipeDetails() {
     </div>
  );
 }
+
