@@ -3,6 +3,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
+import RecipeCard from './components/RecipeCards'
 import IngredientInput from './components/IngredientInput'
 import RecipeList from './components/RecipeList'
 import Login from './components/Login'
@@ -17,6 +18,11 @@ function App() {
 
 {/*searching using the recipe name */}
   const handleSearch = async (query) => {
+   if (!query.trim()) {
+      setRecipes([]);
+      return;
+   }
+
     setIsLoading(true)
     try {
       const res = await fetch(
@@ -48,22 +54,30 @@ function App() {
            setIsLoading(false)
       }
     };
-      const resetRecipes = () => setRecipes([]);
+      const resetRecipes = () => {
+          console.log("resetting recipes...");
+        setRecipes([]);
+      };
 
   return (
     <Router>
        <Header onSearch={handleSearch} />
 
+
        <Routes>
         <Route
            path="/"
            element={
-            <>
+            <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="md:col-span-1 space-y-6">
+                <IngredientInput onSubmit={handleIngredientSubmit} /> 
+              </div>
     
-              <IngredientInput onSubmit={handleIngredientSubmit} /> 
+              <div className="md:col-span-3">
           <RecipeList recipes={recipes} isLoading={isLoading} />
     
-            </>
+            </div>
+            </div>
            }
            />
 

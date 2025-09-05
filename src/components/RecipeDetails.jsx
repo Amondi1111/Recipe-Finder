@@ -64,7 +64,10 @@ export default function RecipeDetails({ resetRecipes}) {
         <div className="text-center">
             <p className="text-[#9B3131] mb-4">{error || 'Recipe not found.'}</p>
             <button
-            onClick={handleBack}
+            onClick={() => {
+                resetRecipes();
+                navigate("/");
+                }}
             className="px-4 py-2 rounded bg-[#FF6347] text-white">
                 Go Back
             </button>
@@ -77,6 +80,7 @@ export default function RecipeDetails({ resetRecipes}) {
     <div className="max-w-5xl mx-auto p-4 md:p-8">
         <button
             onClick={handleBack}
+
             className="px-4 py-2 rounded bg-[#FF6347] text-white">
                 Back to HomePage
             </button>

@@ -24,6 +24,12 @@ function SearchBar({ onSearch }) {
       setResults([]);
     }
   };
+     const handleBack = () => {
+      navigate("/");
+      setQuery("");
+      setResults([]);
+      onSearch("");
+     };
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -42,7 +48,7 @@ function SearchBar({ onSearch }) {
 
           {/*Search Button */}
           <button
-             type="submit"
+             onClick={handleBack}
 
              className="text-gray-500 hover:text-[#FF6347] transition-colors"
              >
