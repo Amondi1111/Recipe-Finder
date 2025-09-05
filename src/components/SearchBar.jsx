@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 
-function SearchBar({ onSearch }) {
+function SearchBar({ recipes, setRecipes }) {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
   const handleSubmit = async(e) => {
@@ -17,18 +16,16 @@ function SearchBar({ onSearch }) {
         `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
       );
       const data = await res.json();
-      setResults(data.meals || []);
-      onSearch(query);
+      setRecipes(data.meals || []);
     } catch (error) {
       console.error("error fetching recipe:", error);
-      setResults([]);
+      setRecipes([]);
     }
   };
      const handleBack = () => {
       navigate("/");
       setQuery("");
-      setResults([]);
-      onSearch("");
+      setRecipes([]);
      };
 
   return (
@@ -58,7 +55,7 @@ function SearchBar({ onSearch }) {
 
            {/*search feedback */}
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {results.map((recipe) => (
+            {recipes.map((recipe) => (
               <div
               key={recipe.idMeal}
               className="bg-white shadow-md rounded-lg overflow-hidden">
