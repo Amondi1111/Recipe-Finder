@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function RecipeCard({ recipe }) {
+function RecipeCard({ recipe, addFavorite }) {
     if (!recipe) return null;
 
     return (
@@ -33,8 +33,13 @@ function RecipeCard({ recipe }) {
                  className="mt-4 block w-full text-center bg-[#FF6347] text-white py-2 rounded-md hover:bg-[#9B3131] transition">
                    View Recipe 
                 </Link>
+            
+                <button
+                   onClick={() => addFavorite(recipe)}
+                   className='mt-2 bg-[#FF6347] text-white px-3 py-1 rounded'>
+                   Add Favorite 
+                   </button>
             </div>
-
         </div>
     );
 }

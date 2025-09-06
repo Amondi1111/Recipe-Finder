@@ -34,11 +34,11 @@ function IngredientInput({ onSubmit, ingredients = [] }) {
               
                  />
                  <button type="submit"
-                   className="text-black hover:text-[#9B3131] transition-colors">
-                  
-                  <FiSearch  size={18}/>
-               
-                   </button>
+                  className=" transition-colors duration-300"
+             >
+              <FiSearch size={18}  
+              className="stroke-gray-800 hover:stroke-[#FF6347] transition-colors duration-300 "/>
+             </button>
 
 
                   {/* For auto completion of ingredient list */}

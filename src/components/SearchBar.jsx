@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 
-function SearchBar({ recipes, setRecipes }) {
+function SearchBar({ recipes = [], setRecipes = () => {} }) {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
@@ -45,17 +45,29 @@ function SearchBar({ recipes, setRecipes }) {
 
           {/*Search Button */}
           <button
-             onClick={handleBack}
+             type="submit"
 
              className="text-gray-500 hover:text-[#FF6347] transition-colors"
              >
               <FiSearch size={18} />
              </button>
+
+             {recipes.length > 0 && (
+              <button
+              type="button"
+              onClick={handleBack}
+              className="ml-2 text-xs text-[#FF6347] underline"
+              >
+              Clear
+              </button>
+             )}
+
            </form>
 
            {/*search feedback */}
-           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {recipes.map((recipe) => (
+           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4">
+            {Array.isArray(recipes) && recipes.length > 0 ?(
+            recipes.map((recipe) => (
               <div
               key={recipe.idMeal}
               className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -72,12 +84,20 @@ function SearchBar({ recipes, setRecipes }) {
                     <Link
                 to={`/recipe/${recipe.idMeal}`}
             
-                 className="mt-4 block w-full text-center bg-[#FF6347] text-white py-2 rounded-md hover:bg-[#9B3131] transition">
+                 className="mt-4 block w-full text-center bg-[#FF6347] text-white py-2 rounded-md hover:bg-[#9B3131] transition"
+                 >
                    View Recipe 
                 </Link>  
            </div>
            </div>
-  ))}
+  ))
+) : (
+  query && (
+    <p className='text-gray-500 text-center col-span-full'>
+      No recipes found. Try another search!
+    </p>
+  )
+)}
   </div>
   </div>
   );

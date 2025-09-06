@@ -3,18 +3,19 @@ import { useState } from 'react'
 import axios from 'axios'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
-import RecipeCard from './components/RecipeCards'
+import RecipeCard from './components/RecipeCard'
 import IngredientInput from './components/IngredientInput'
 import RecipeList from './components/RecipeList'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import RecipeDetails from './components/RecipeDetails'
+import FavoriteList from './components/FavoriteList'
 import './App.css'
 
 function App() {
-  const [recipes, setRecipes] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-
+  const [recipes, setRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
 {/*searching using the recipe name */}
   const handleSearch = async (query) => {
@@ -59,6 +60,16 @@ function App() {
         setRecipes([]);
       };
 
+      const addFavorite = (recipes) => {
+        if (!favorites.find(fav => fav.idMeal === recipes.idMeal)) {
+          setFavorites([...favorites, recipes]);
+        }
+      };
+
+      const deleteFavorite = (idMeal) => {
+        setFavorites(favorites.filter(fav => fav.idMeal !== idMeal));
+      };
+
   return (
     <Router>
        <Header onSearch={handleSearch} />
@@ -68,16 +79,27 @@ function App() {
         <Route
            path="/"
            element={
-            <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="max-w-7xl mx-auto p-6 gap-8">
               <div className="md:col-span-1 space-y-6">
                 <IngredientInput onSubmit={handleIngredientSubmit} /> 
               </div>
+            <div className="md:col-span-3">
+              <FavoriteList
+                 favorite={favorites}
+                 deleteFavorite={deleteFavorite}
+                 />
+
     
-              <div className="md:col-span-3">
-          <RecipeList recipes={recipes} isLoading={isLoading} />
-    
+          <RecipeList
+           recipes={recipes} 
+           isLoading={isLoading}
+           addFavorite={addFavorite}
+           favorite={favorites}
+           
+           />
+              </div>
             </div>
-            </div>
+      
            }
            />
 
