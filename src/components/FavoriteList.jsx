@@ -9,9 +9,10 @@ function FavoriteList({ favorites = [], deleteFavorite}) {
                     {favorites.map(recipe => (
         <div key={recipe.idMeal} className="bg-white shadow-md rounded-lg overflow-hidden">
                   <img
-                  src={recipe.strMealthumb || '/fallback-image.png'}
+                  src={recipe.strMealThumb }
                   alt={recipe.strMeal}
                   className="w-full h-48 object-cover" />
+                  
                   <div className="p-4">
             <h3 className="text-lg font-bold">{recipe.strMeal}</h3>
             <button
@@ -21,7 +22,7 @@ function FavoriteList({ favorites = [], deleteFavorite}) {
                 </button>
                  </div>
                  </div>
-                    ))}
+                 ))}
         </div>
     )}
     </div>
