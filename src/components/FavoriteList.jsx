@@ -7,13 +7,19 @@ function FavoriteList({ favorites = [], deleteFavorite}) {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {favorites.map(recipe => (
-        <div key={recipe.idMeal} className="bg-white shadow-md rounded-lg p-4">
+        <div key={recipe.idMeal} className="bg-white shadow-md rounded-lg overflow-hidden">
+                  <img
+                  src={recipe.strMealthumb || '/fallback-image.png'}
+                  alt={recipe.strMeal}
+                  className="w-full h-48 object-cover" />
+                  <div className="p-4">
             <h3 className="text-lg font-bold">{recipe.strMeal}</h3>
             <button
                 onClick={() => deleteFavorite(recipe.idMeal)}
                 className="mt-2 bg-[#FF6347] text-white px-3 py-1 rounded">
                     Delete
                 </button>
+                 </div>
                  </div>
                     ))}
         </div>
